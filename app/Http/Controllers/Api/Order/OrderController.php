@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Api\Customer;
+namespace App\Http\Controllers\Api\Order;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Customer\AddRequest;
-use App\Models\Customer;
+use App\Http\Requests\Api\Order\AddRequest;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class CustomerController extends Controller
+class OrderController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $customers = Customer::all();
+        $order = Order::all();
 
         return response()->json([
             "status" => Response::HTTP_ACCEPTED,
-            "data" => $customers,
+            "data" => $order,
         ]);
     }
 
@@ -28,10 +28,11 @@ class CustomerController extends Controller
      */
     public function store(AddRequest $request)
     {
-        $save = new Customer();
-        $save->name = $request->name;
-        $save->email = $request->email;
-        $save->phone = $request->phone;
+        $save = new Order();
+        $save->customer_id = $request->customer_id;
+        $save->order_date = $request->order_date;
+        $save->total_price = $request->total_price;
+        $save->status = $request->status;
         $save->save();
 
         return response()->json([
@@ -43,11 +44,11 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Customer $customer)
+    public function show(Order $order)
     {
         return response()->json([
             "status" => Response::HTTP_ACCEPTED,
-            "data" => $customer,
+            "data" => $order,
         ]);
     }
 }
